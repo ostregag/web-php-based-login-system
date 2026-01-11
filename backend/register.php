@@ -38,7 +38,8 @@ $stmt_insert->execute();
 $stmt_insert->close();
 
 $conn->close();
-header("Location: ../login/index.html?ok")
+header("Location: ../login/index.html?ok");
+exit();
 
 ?>
 
