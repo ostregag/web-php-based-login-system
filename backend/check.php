@@ -1,5 +1,6 @@
 <?php
 
+
 if (!isset ($_COOKIE["logtoken"])) {
     header ("Location: ../login");
    exit();

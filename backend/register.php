@@ -20,7 +20,7 @@ $stmt_sameusercheck->bind_result($sameuser);
 $stmt_sameusercheck->fetch();
 $stmt_sameusercheck->close();
 if ( $sameuser > 0 ) { 
-    header("Location: /register.html?istnieje");
+    header("Location: index.html?istnieje");
     exit();
 };
 
