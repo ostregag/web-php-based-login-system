@@ -40,7 +40,7 @@ $stmt_insert->close();
 $conn->close();
 header("Location: ../login/index.html?ok");
 exit();
-//hello ;3
+
 ?>
 
 
