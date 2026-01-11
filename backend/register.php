@@ -10,11 +10,16 @@ if (!isset($_POST["email"]) || !isset($_POST["haslo"])) {
 }
 
 $user = filter_var(trim ($_POST["email"]), FILTER_SANITIZE_EMAIL);
+if (!filter_var($user, FILTER_VALIDATE_EMAIL)) {
+    header("Location: index.html?bad_email");
+    exit();
+
+}
 
 
 $sql_sameusercheck = "SELECT COUNT(*) FROM $table WHERE mail = ?";
 $stmt_sameusercheck = $conn->prepare($sql_sameusercheck);
-$stmt_sameusercheck->bind_param("s", $_POST["email"]);
+$stmt_sameusercheck->bind_param("s", $user);
 $stmt_sameusercheck->execute();
 $stmt_sameusercheck->bind_result($sameuser);
 $stmt_sameusercheck->fetch();
