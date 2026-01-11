@@ -15,7 +15,7 @@ $stmt->fetch();
 $stmt->close();
 
 if (!$email) {
-    header("../login", true, 302);
+    header("Location: ../login", true, 302);
     exit();
 
 }
