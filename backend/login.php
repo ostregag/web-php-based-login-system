@@ -42,7 +42,7 @@ if ($szyfrowanehaslo && password_verify($haslo, $szyfrowanehaslo)) {
     
 
 } else {
-    header("/index.html?blad");
+    header("Location: /index.html?blad");
     $conn->close();
     exit();
     
