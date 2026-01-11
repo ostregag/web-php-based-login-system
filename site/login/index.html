@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie</title>
+</head>
+<body>
+    <form action="login.php" method="POST">
+        <input type="email" name="email" placeholder="Your email" required>
+        <input type="password" name="haslo" placeholder="Your password">
+        <button type="submit">log In</button>
+        <a href="../registration/">Register</a>
+        <a href="../">Go Back</a>
+    </form>
+</body>
+</html>
+<script>
+const Url =  new URLSearchParams(window.location.search);
+if (Url.has ('ok')) {
+    document.write("Account Created")
+}
+if (Url.has ('blad')){
+    document.write("Error")
+
+
+}
+
+
+</script>
+<script>
+
+
+    
+        function checkIfLoggedIn() {
+            
+            fetch('auth.php')
+                .then(response => response.json())
+                .then(data => {
+                  
+                    if (data.status === 'valid') {
+                        window.location.href = '../panel';
+                    }
+                })
+                //.catch(error => console.log('Error:', error));
+        }
+
+     
+        window.onload = checkIfLoggedIn;
+    </script>
+    
