@@ -15,6 +15,26 @@ if (!filter_var($user, FILTER_VALIDATE_EMAIL)) {
     exit();
 
 }
+$ip_addr = $_SERVER['REMOTE_ADDR'];
+
+//rate limit - create account every five minutes from one ip
+$sql_r_limit = "SELECT COUNT(*) FROM $table WHERE register_ip = ? AND created_at > (NOW() - INTERVAL 5 MINUTE)";
+$stmt_rlimit = $conn->prepare($sql_r_limit);
+$stmt_rlimit->bind_param("s", $ip_addr);
+$stmt_rlimit->execute();
+$stmt_rlimit->bind_result($r_limit);
+$stmt_rlimit->fetch();
+$stmt_rlimit->close();
+if ($r_limit > 0) {
+    header("Location: index.html?rate_limited");
+    $conn->close();
+    exit();
+}
+
+
+
+
+
 
 
 $sql_sameusercheck = "SELECT COUNT(*) FROM $table WHERE mail = ?";
@@ -25,20 +45,22 @@ $stmt_sameusercheck->bind_result($sameuser);
 $stmt_sameusercheck->fetch();
 $stmt_sameusercheck->close();
 if ( $sameuser > 0 ) { 
-    header("Location: index.html?istnieje");
+    header("Location: index.html?exists");
+    $conn->close();
     exit();
 };
 
 $password = password_hash(trim($_POST["haslo"]), PASSWORD_BCRYPT);
 
-$sql_insert = "INSERT INTO $table (mail, password) VALUES (?, ?)";
+$sql_insert = "INSERT INTO $table (mail, password, register_ip) VALUES (?, ?, ?)";
 $stmt_insert = $conn->prepare($sql_insert);
-$stmt_insert->bind_param("ss", $user, $password);
+$stmt_insert->bind_param("sss", $user, $password, $ip_addr);
 $stmt_insert->execute();
 $stmt_insert->close();
 
 $conn->close();
 header("Location: ../login/index.html?ok");
+$conn->close();
 exit();
 //hello ;3
 ?>
