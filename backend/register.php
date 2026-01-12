@@ -16,7 +16,11 @@ if (!filter_var($user, FILTER_VALIDATE_EMAIL)) {
 
 }
 $ip_addr = $_SERVER['REMOTE_ADDR'];
-
+//minimum 8 character password
+if (trim($_POST["haslo"] < 8 )) {
+    header("Location: index.html?password_too_short");
+    exit();
+}
 //rate limit - create account every five minutes from one ip
 $sql_r_limit = "SELECT COUNT(*) FROM $table WHERE register_ip = ? AND created_at > (NOW() - INTERVAL 5 MINUTE)";
 $stmt_rlimit = $conn->prepare($sql_r_limit);
@@ -31,12 +35,7 @@ if ($r_limit > 0) {
     exit();
 }
 
-
-
-
-
-
-
+//check if the user already exists
 $sql_sameusercheck = "SELECT COUNT(*) FROM $table WHERE mail = ?";
 $stmt_sameusercheck = $conn->prepare($sql_sameusercheck);
 $stmt_sameusercheck->bind_param("s", $user);
