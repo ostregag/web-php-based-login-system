@@ -33,9 +33,9 @@ if ($szyfrowanehaslo && password_verify($haslo, $szyfrowanehaslo)) {
 
 
     //insert login ip into the database
-    $sql_insert_ip = "INSERT INTO $table (login_ip) VALUES (?)";
+    $sql_insert_ip = "update $table set login_ip = ? where mail = ?";
     $stmt_insert_ip = $conn->prepare($sql_insert_ip);
-    $stmt_insert_ip->bind_param("s", $ip_addr_log);
+    $stmt_insert_ip->bind_param("ss", $ip_addr_log, $user);
     $stmt_insert_ip->execute();
     $stmt_insert_ip->close();
     

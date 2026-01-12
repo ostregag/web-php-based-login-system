@@ -9,7 +9,7 @@ require "check.php";
     <title>Protected Site</title>
 </head>
 <body>
-  <a href="wyloguj.php" method="POST">wyloguj</a>  
+  <a href="wyloguj.php" method="POST">logout</a>  
 </body>
 
 

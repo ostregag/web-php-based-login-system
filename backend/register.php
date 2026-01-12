@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 if (!isset($_POST["email"]) || !isset($_POST["haslo"])) {
     die;
 }
-
+$password1 = trim($_POST["haslo"]);
 $user = filter_var(trim ($_POST["email"]), FILTER_SANITIZE_EMAIL);
 if (!filter_var($user, FILTER_VALIDATE_EMAIL)) {
     header("Location: index.html?bad_email");
@@ -17,7 +17,7 @@ if (!filter_var($user, FILTER_VALIDATE_EMAIL)) {
 }
 $ip_addr = $_SERVER['REMOTE_ADDR'];
 //minimum 8 character password
-if (trim($_POST["haslo"] < 8 )) {
+if  (strlen($_POST["haslo"]) < 8) {
     header("Location: index.html?password_too_short");
     exit();
 }
@@ -49,7 +49,7 @@ if ( $sameuser > 0 ) {
     exit();
 };
 
-$password = password_hash(trim($_POST["haslo"]), PASSWORD_BCRYPT);
+$password = password_hash($password1, PASSWORD_BCRYPT);
 
 $sql_insert = "INSERT INTO $table (mail, password, register_ip) VALUES (?, ?, ?)";
 $stmt_insert = $conn->prepare($sql_insert);
