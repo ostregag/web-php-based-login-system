@@ -5,10 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Site</title>
 </head>
-<body>
+<body onload="clock(), date()">
     <h1>Example Site</h1>
     <a href="login/" style="display: block"> Login</a>
     <a href="registration/">Register</a>
-    
+    <a id="clock" style="display:block"></a>
+    <a id="date" style="display:block"></a>
+<script>
+function clock() {
+var time = new Date();
+var hour = time.getHours();
+var minute = time.getMinutes();
+var second = time.getSeconds();
+if (hour < 10 ) {
+    var hour = "0" + hour
+}
+if (minute < 10 ) {
+    var minute = "0" + minute
+}
+if (second < 10 ) {
+    var second = "0" + second
+}
+
+display_clock = hour + ":" + minute + ":" + second;
+
+document.getElementById("clock").innerHTML=display_clock;
+setTimeout(clock, 1000);
+}
+function date() {
+    today = new Date();
+    dd = today.getDate();
+    mm = (today.getMonth() + 1)
+    yyyy = today.getFullYear();
+if (dd < 10) { 
+    dd = "0" + dd;
+}
+if ( mm < 10 ) { 
+    mm = "0" + mm;
+}
+display_date = dd + "/" + mm + "/" + yyyy;
+document.getElementById("date").innerHTML=display_date;
+setTimeout(date, 1000);
+}
+</script>
 </body>
 </html>
