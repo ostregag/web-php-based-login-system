@@ -11,7 +11,7 @@ if (!isset($_POST["email"]) || !isset($_POST["haslo"])) {
 
 $user = trim ($_POST["email"]);
 $haslo = trim ($_POST['haslo']);
-
+$ip_addr_log = $_SERVER['REMOTE_ADDR'];
 
 $sql_login = "SELECT password FROM $table WHERE mail = ?";
 $stmt_login = $conn->prepare($sql_login);
@@ -30,7 +30,14 @@ if ($szyfrowanehaslo && password_verify($haslo, $szyfrowanehaslo)) {
     $stmt_update = $conn->prepare($sql_update);
     $stmt_update->bind_param ("ss" , $ciastko, $user);
     $stmt_update->execute();
-    $stmt_update->close();
+
+
+    //insert login ip into the database
+    $sql_insert_ip = "INSERT INTO $table (login_ip) VALUES (?)";
+    $stmt_insert_ip = $conn->prepare($sql_insert_ip);
+    $stmt_insert_ip->bind_param("s", $ip_addr_log);
+    $stmt_insert_ip->execute();
+    $stmt_insert_ip->close();
     
     setcookie ("logtoken", $ciastko, time() + 60 * 60 * 24 * 7, "/", "", true, true);
     header("Location: ../panel");
