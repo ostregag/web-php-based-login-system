@@ -13,14 +13,19 @@ $user = trim ($_POST["email"]);
 $haslo = trim ($_POST['haslo']);
 $ip_addr_log = $_SERVER['REMOTE_ADDR'];
 
-$sql_login = "SELECT password FROM $table WHERE mail = ?";
+$sql_login = "SELECT password, verified FROM $table WHERE mail = ?";
 $stmt_login = $conn->prepare($sql_login);
 $stmt_login->bind_param ("s" , $user);
 $stmt_login->execute();
-$stmt_login->bind_result($szyfrowanehaslo);
-
+$stmt_login->bind_result($szyfrowanehaslo, $verified_status);
 $stmt_login->fetch();
 $stmt_login->close();
+if ($verified_status !== 'yes') {
+    header("Location: index.html?notverified");
+    $stmt_login->close();
+    $conn->close();
+    exit();
+}
 
 if ($szyfrowanehaslo && password_verify($haslo, $szyfrowanehaslo)) {
 
