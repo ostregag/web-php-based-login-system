@@ -1,6 +1,7 @@
 <?php
 
 require $_SERVER['backend'] . '/dane.php';
+require $_SERVER['backend'] . '/config.php';
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     die;
 }
@@ -57,7 +58,9 @@ $stmt_insert->bind_param("sss", $user, $password, $ip_addr);
 $stmt_insert->execute();
 $stmt_insert->close(); 
 //mail account verification - OPTIONAL
-//require $_SERVER['backend'] . '/mailer.php'; //uncomment this to use mail verification - fill mailer.php with your mail credentials
+if ($ENABLE_EMAIL_VERIFICATION == 1) {
+require $_SERVER['backend'] . '/mailer.php';
+}
 header("Location: ../login/index.html?ok");
 exit();
 //hello ;3
