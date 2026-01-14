@@ -19,10 +19,10 @@
 <script>
 const Url =  new URLSearchParams(window.location.search);
 if (Url.has ('ok')) {
-    document.write("Account Created")
+    document.write("<a>Account Created</a>")
 }
 if (Url.has ('blad')){
-    document.write("Error")
+    document.write("<a>Error</a>")
 
 
 }
@@ -43,8 +43,7 @@ if (Url.has ('blad')){
                         window.location.href = '../panel';
                     }
                 })
-                //.catch(error => console.log('Error:', error));
-        }
+            }
 
      
         window.onload = checkIfLoggedIn;

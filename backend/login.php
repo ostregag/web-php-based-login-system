@@ -1,6 +1,7 @@
 <?php
 
 require $_SERVER['backend'] . '/dane.php';
+require $_SERVER['backend'] . '/config.php';
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     die;
 }
@@ -20,8 +21,12 @@ $stmt_login->bind_param ("s" , $user);
 $stmt_login->execute();
 $stmt_login->bind_result($szyfrowanehaslo, $verified_status);
 $stmt_login->fetch();
-$stmt_login->close(); 
-//require $_SERVER['backend'] . '/email_login.php'; //uncomment this to use mail verification - fill mailer.php with your mail credentials
+$stmt_login->close();
+
+//OPTIONAL EMAIL VER
+if ($ENABLE_EMAIL_VERIFICATION == 1) {
+require $_SERVER['backend'] . '/email_login.php';
+} 
 
 if ($szyfrowanehaslo && password_verify($haslo, $szyfrowanehaslo)) {
 

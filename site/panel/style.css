@@ -11,3 +11,9 @@ a {
     margin-bottom: 10px;
     font-family: Arial, Helvetica, sans-serif;
 }
+p {
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
