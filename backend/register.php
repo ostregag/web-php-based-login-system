@@ -50,17 +50,15 @@ if ( $sameuser > 0 ) {
 };
 
 $password = password_hash($password1, PASSWORD_BCRYPT);
-//mail account verification
-require $_SERVER['backend'] . '/mailer.php';
-$sql_insert = "INSERT INTO $table (mail, password, register_ip, verify_token) VALUES (?, ?, ?, ?)";
-$stmt_insert = $conn->prepare($sql_insert);
-$stmt_insert->bind_param("ssss", $user, $password, $ip_addr, $account_ver_token);
-$stmt_insert->execute();
-$stmt_insert->close();
 
-$conn->close();
+$sql_insert = "INSERT INTO $table (mail, password, register_ip) VALUES (?, ?, ?)";
+$stmt_insert = $conn->prepare($sql_insert);
+$stmt_insert->bind_param("sss", $user, $password, $ip_addr);
+$stmt_insert->execute();
+//mail account verification - OPTIONAL
+//require $_SERVER['backend'] . '/mailer.php'; //uncomment this to use mail verification - fill mailer.php with your mail credentials
+$conn->close(); //- COMMENT THIS LINE IF YOURE USING MAIL VERIFICATION
 header("Location: ../login/index.html?ok");
-$conn->close();
 exit();
 //hello ;3
 ?>
