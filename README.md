@@ -10,11 +10,12 @@
 make sure that the entire backend folder is not accessible through your website!
  - fill backend/dane.php with your database credentials;
  - set a php enviroment variable called "backend" pointing to the backend directory, and enjoy!
-  - include ```php
-  <?php
-require $_SERVER['backend'] . '/check.php';
-? 
-``` at the top of every page that you want protected
+  - include this at the top of every page that you want protected:
+  ```php
+    <?php
+    require $_SERVER['backend'] . '/check.php';
+    ?> 
+``` 
 
  # WITH EMAIL VERIFICATION:
  - fill backend/config.php with your mail data
