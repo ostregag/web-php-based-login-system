@@ -13,7 +13,7 @@ make sure that the entire backend folder is not accessible through your website!
 
  # WITH EMAIL VERIFICATION:
  - fill backend/mailer.php with your mail data;
- - change ```php ENABLE_EMAIL_VERIFICATION ``` to 1 in backend/config.php
+ - change ```ENABLE_EMAIL_VERIFICATION = 0``` to ```ENABLE_EMAIL_VERIFICATION = 1``` in backend/config.php
 
 
 
