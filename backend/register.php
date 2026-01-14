@@ -55,11 +55,10 @@ $sql_insert = "INSERT INTO $table (mail, password, register_ip) VALUES (?, ?, ?)
 $stmt_insert = $conn->prepare($sql_insert);
 $stmt_insert->bind_param("sss", $user, $password, $ip_addr);
 $stmt_insert->execute();
-$stmt_insert->close();
-
-$conn->close();
+$stmt_insert->close(); 
+//mail account verification - OPTIONAL
+//require $_SERVER['backend'] . '/mailer.php'; //uncomment this to use mail verification - fill mailer.php with your mail credentials
 header("Location: ../login/index.html?ok");
-$conn->close();
 exit();
 //hello ;3
 ?>
