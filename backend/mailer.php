@@ -5,20 +5,21 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 require $_SERVER['backend'] . "/dane.php";
+require $_SERVER['backend'] . "/config.php";
 $send_email = new PHPMailer(true);
     $send_email->isSMTP();
     $send_email->Port = 587;
-    $send_email->Host = "smtp.gmail.com";   //your mail server e.g smtp.gmail.com
+    $send_email->Host = $EMAIL_SERVER;   //your mail server e.g smtp.gmail.com
     $send_email->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $send_email->SMTPAuth = true;
     $send_email->Encoding = 'base64';
-    $send_email->Username = '';     //your username
-    $send_email->Password = '';    //your password   
-    $send_email->DKIM_selector = ''; //your dkim key name  in dns records        
-    $send_email->DKIM_domain = '';  //your domain      
-    $send_email->DKIM_private = ''; //your dkim key path - without it mails will end up in spam
-    $send_email->DKIM_passphrase = '';    
-$SEND_FROM_EMAIL = ""; // the email from which you want to send your verification links 
+    $send_email->Username = $EMAIL_USERNAME;     //your username
+    $send_email->Password = $EMAIL_PASSWORD;    //your password   
+    $send_email->DKIM_selector = $EMAIL_DKIM_SELECTOR; //your dkim key name  in dns records        
+    $send_email->DKIM_domain = $EMAIL_DKIM_DOMAIN;  //your domain      
+    $send_email->DKIM_private = $EMAIL_DKIM_PRIVATE; //your dkim key path - without it mails will end up in spam
+    $send_email->DKIM_passphrase = $EMAIL_DKIM_PASSPHRASE;    
+$SEND_FROM_EMAIL = $EMAIL_SEND_FROM; // the email from which you want to send your verification links 
 $account_ver_token = bin2hex(random_bytes(125));        
 
 
