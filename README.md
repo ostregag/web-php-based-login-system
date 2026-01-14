@@ -12,6 +12,7 @@ make sure that the entire backend folder is not accessible through your website!
 
 WITH EMAIL VERIFICATION:
  - fill backend/mailer.php with your mail data;
+ 
 uncomment lines: 
  - 60 in backend/register.php
  - 24 in backend/login.php
