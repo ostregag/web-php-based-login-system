@@ -21,8 +21,7 @@ $stmt_login->execute();
 $stmt_login->bind_result($szyfrowanehaslo, $verified_status);
 $stmt_login->fetch();
 $stmt_login->close(); 
-//UNCOMMENT THE LINE BELOW IF YOURE USING EMAIL VER
-//require $_SERVER['backend'] . '/email_login.php';
+//require $_SERVER['backend'] . '/email_login.php'; //uncomment this to use mail verification - fill mailer.php with your mail credentials
 
 if ($szyfrowanehaslo && password_verify($haslo, $szyfrowanehaslo)) {
 
