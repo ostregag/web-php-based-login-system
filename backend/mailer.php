@@ -39,7 +39,7 @@ $stmt_mail = $conn->prepare($sql_mail);
 $stmt_mail->bind_param("ss", $account_ver_token_hash, $user );
 $stmt_mail->execute();
 $stmt_mail->close();
-exit();
+
 }
 catch (Exception $e) {
     echo "error" . $send_email->ErrorInfo;
