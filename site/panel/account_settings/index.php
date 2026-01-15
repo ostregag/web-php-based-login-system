@@ -1,5 +1,6 @@
   <?php
   require $_SERVER['backend'] . '/check.php';
+  require $_SERVER['backend'] . '/config.php';
   ?>
   <!DOCTYPE html>
   <html lang="en">
@@ -12,6 +13,11 @@
 
   <body>
   <h1>account settings for: <?php echo $email ?></h1>
-  <a href="pass_reset_mailer.php">send password reset email</a>
+  <?php 
+  If ($ENABLE_EMAIL_VERIFICATION == 1) {
+    echo '<a href="pass_reset_mailer.php">send password reset email</a>';
+  }
+  ?>
+
   </body>
   </html>
