@@ -21,6 +21,7 @@ make sure that the entire backend folder is not accessible through your website!
 
  # WITH EMAIL VERIFICATION:
  - fill backend/config.php with your mail data
+ - fill both mailer(s).php with your desired mail text
  - change ```ENABLE_EMAIL_VERIFICATION = 0``` to ```ENABLE_EMAIL_VERIFICATION = 1``` in backend/config.php
  - for password reset to work, you have to have email verification enabled
 

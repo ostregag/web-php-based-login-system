@@ -34,7 +34,8 @@ $account_reset_token_hash = hash('sha256', $account_reset_token);
     $send_email->setFrom($SEND_FROM_EMAIL, "your_name");
     //$send_email->setLanguage('lang', '/path/to/lang');
     $send_email->send();
-    $sql_mail = "update $table set pass_reset_token = ? where mail = ?";
+    
+$sql_mail = "update $table set pass_reset_token = ? where mail = ?";
 $stmt_mail = $conn->prepare($sql_mail);
 $stmt_mail->bind_param("ss", $account_reset_token_hash, $user );
 $stmt_mail->execute();
