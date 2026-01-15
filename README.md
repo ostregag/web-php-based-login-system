@@ -1,9 +1,11 @@
  # FEATURES:
  - hashed passwords;
  - optional account verification via email;
+ - optional password reset via email - if you dont want it feel free to delete every file referencing password reset;
  - rate limiting per ip; create only one account every 5 minutes from the same ip address;
  - secure cookie - automatic login if your cookie is valid (7 days from login);
  - password lenght requirement; 8 characters;
+ - password reset via email
 
  # HOW TO USE:
 
