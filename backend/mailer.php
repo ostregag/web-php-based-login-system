@@ -6,6 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 require $_SERVER['backend'] . "/dane.php";
 require $_SERVER['backend'] . "/config.php";
+try {
 $send_email = new PHPMailer(true);
     $send_email->isSMTP();
     $send_email->Port = 587;
@@ -33,18 +34,24 @@ $account_ver_token_hash = hash('sha256', $account_ver_token);
     $send_email->setFrom($SEND_FROM_EMAIL, "your_name");
     //$send_email->setLanguage('lang', '/path/to/lang');
     $send_email->send();
-if (!$send_email->send()) {
-    echo "error" . $send_email->ErrorInfo;
-}
-if ($send_email->send()) {
-    //THIS IS A SEPARATE STATEMENT JUST TO INSERT THE TOKEN, SO THE MAIL STAYS OPTIONAL
-    //ONLY UPDATE THE DB IF THE MAIL IS SENT SUCCESFULLY
-$sql_mail = "update $table set verify_token = ? where mail = ?";
+    $sql_mail = "update $table set verify_token = ? where mail = ?";
 $stmt_mail = $conn->prepare($sql_mail);
 $stmt_mail->bind_param("ss", $account_ver_token_hash, $user );
 $stmt_mail->execute();
 $stmt_mail->close();
+exit();
 }
+catch (Exception $e) {
+    echo "error" . $send_email->ErrorInfo;
+    $sent = false;
+    exit();
+}
+ 
+
+
+
+
+
 
 ?>
 

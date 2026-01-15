@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 require $_SERVER['backend'] . "/dane.php";
 require $_SERVER['backend'] . "/config.php";
-
+try {
 $send_email = new PHPMailer(true);
     $send_email->isSMTP();
     $send_email->Port = 587;
@@ -34,15 +34,7 @@ $account_reset_token_hash = hash('sha256', $account_reset_token);
     $send_email->setFrom($SEND_FROM_EMAIL, "your_name");
     //$send_email->setLanguage('lang', '/path/to/lang');
     $send_email->send();
-if (!$send_email->send()) {
-    echo "error" . $send_email->ErrorInfo;
-    header("Location: index.php?error");
-    exit();
-}
-if ($send_email->send()) {
-
-    //ONLY UPDATE THE DB IF THE MAIL IS SENT SUCCESFULLY
-$sql_mail = "update $table set pass_reset_token = ? where mail = ?";
+    $sql_mail = "update $table set pass_reset_token = ? where mail = ?";
 $stmt_mail = $conn->prepare($sql_mail);
 $stmt_mail->bind_param("ss", $account_reset_token_hash, $user );
 $stmt_mail->execute();
@@ -50,6 +42,15 @@ $stmt_mail->close();
     header("Location: index.php?success");
     exit();
 }
+catch (Exception $e) {
+    echo "error" . $send_email->ErrorInfo;
+    $sent = false;
+}
+
+
+
+
+
 
 ?>
 
