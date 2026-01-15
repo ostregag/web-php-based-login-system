@@ -31,10 +31,11 @@ require $_SERVER['backend'] . '/email_login.php';
 if ($szyfrowanehaslo && password_verify($haslo, $szyfrowanehaslo)) {
 
     $ciastko = bin2hex(random_bytes(125));
+    $ciastko_hash = hash('sha256', $ciastko);
 
     $sql_update = "UPDATE $table SET token = ? WHERE mail = ?";
     $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param ("ss" , $ciastko, $user);
+    $stmt_update->bind_param ("ss" , $ciastko_hash, $user);
     $stmt_update->execute();
 
 

@@ -6,6 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 require $_SERVER['backend'] . "/dane.php";
 require $_SERVER['backend'] . "/config.php";
+
 $send_email = new PHPMailer(true);
     $send_email->isSMTP();
     $send_email->Port = 587;
@@ -20,30 +21,34 @@ $send_email = new PHPMailer(true);
     $send_email->DKIM_private = $EMAIL_DKIM_PRIVATE; //your dkim key path - without it mails will end up in spam
     $send_email->DKIM_passphrase = $EMAIL_DKIM_PASSPHRASE;    
 $SEND_FROM_EMAIL = $EMAIL_SEND_FROM; // the email from which you want to send your verification links 
-$account_ver_token = bin2hex(random_bytes(125));    
-$account_ver_token_hash = hash('sha256', $account_ver_token);   
+$account_reset_token = bin2hex(random_bytes(125));    
+$account_reset_token_hash = hash('sha256', $account_reset_token);   
 
 
 
-    $account_activation_link = "yourwebsite.com/verify.php?token=" . $account_ver_token;
+    $account_activation_link = "yourwebsite.com/pass_reset.php?token=" . $account_reset_token;
     $send_email->addAddress($user); 
-    $send_email->Subject = "Your verification link for the site";
-    $send_email->Body = "Your verification link: " . $account_activation_link;
+    $send_email->Subject = "Your reset link for the site";
+    $send_email->Body = "Your reset link: " . $account_activation_link;
     $send_email->addReplyTo($SEND_FROM_EMAIL, "your_name");
     $send_email->setFrom($SEND_FROM_EMAIL, "your_name");
     //$send_email->setLanguage('lang', '/path/to/lang');
     $send_email->send();
 if (!$send_email->send()) {
     echo "error" . $send_email->ErrorInfo;
+    header("Location: index.php?error");
+    exit();
 }
 if ($send_email->send()) {
-    //THIS IS A SEPARATE STATEMENT JUST TO INSERT THE TOKEN, SO THE MAIL STAYS OPTIONAL
+
     //ONLY UPDATE THE DB IF THE MAIL IS SENT SUCCESFULLY
-$sql_mail = "update $table set verify_token = ? where mail = ?";
+$sql_mail = "update $table set pass_reset_token = ? where mail = ?";
 $stmt_mail = $conn->prepare($sql_mail);
-$stmt_mail->bind_param("ss", $account_ver_token_hash, $user );
+$stmt_mail->bind_param("ss", $account_reset_token_hash, $user );
 $stmt_mail->execute();
 $stmt_mail->close();
+    header("Location: index.php?success");
+    exit();
 }
 
 ?>

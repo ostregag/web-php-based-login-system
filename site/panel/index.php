@@ -12,6 +12,7 @@ require "check.php"; // this is required for every protected site
 </head>
 <body>
   <a href="logout.php" method="POST">logout</a>  
+  <a href="account_settings/">settings</a>
   <p>Logged in as: <?php echo $email ?></p>
 </body>
 
