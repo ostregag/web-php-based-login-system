@@ -20,7 +20,8 @@ $send_email = new PHPMailer(true);
     $send_email->DKIM_private = $EMAIL_DKIM_PRIVATE; //your dkim key path - without it mails will end up in spam
     $send_email->DKIM_passphrase = $EMAIL_DKIM_PASSPHRASE;    
 $SEND_FROM_EMAIL = $EMAIL_SEND_FROM; // the email from which you want to send your verification links 
-$account_ver_token = bin2hex(random_bytes(125));        
+$account_ver_token = bin2hex(random_bytes(125));    
+$account_ver_token_hash = hash('sha256', $account_ver_token);   
 
 
 
@@ -40,7 +41,7 @@ if ($send_email->send()) {
     //ONLY UPDATE THE DB IF THE MAIL IS SENT SUCCESFULLY
 $sql_mail = "update $table set verify_token = ? where mail = ?";
 $stmt_mail = $conn->prepare($sql_mail);
-$stmt_mail->bind_param("ss", $account_ver_token, $user );
+$stmt_mail->bind_param("ss", $account_ver_token_hash, $user );
 $stmt_mail->execute();
 $stmt_mail->close();
 }

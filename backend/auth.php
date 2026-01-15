@@ -4,11 +4,11 @@ require $_SERVER['backend'] . '/dane.php';
 if (isset($_COOKIE['logtoken'])) {
     $ciastko = $_COOKIE['logtoken'];
 }
-
+$ciastko_hash = hash('sha256',$ciastko);
 $sql = "SELECT mail FROM $table WHERE token = ?";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $ciastko);
+$stmt->bind_param("s", $ciastko_hash);
 $stmt->execute();
 $stmt->store_result();
 

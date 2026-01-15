@@ -8,11 +8,12 @@ if (!ctype_alnum($token)) {
     header ("Location: login/index.html?badlink");
     exit();
 } 
+$token_hash = hash('sha256', $token);
 require $_SERVER['backend'] . '/dane.php';
 
 $sql_ver = "SELECT mail from $table where verify_token = ? and verified = 'no' LIMIT 1";
 $stmt_ver = $conn->prepare($sql_ver);
-$stmt_ver->bind_param("s", $token);
+$stmt_ver->bind_param("s", $token_hash);
 $stmt_ver->execute();
 $stmt_ver->bind_result($db_mail);
 $stmt_ver->fetch();
