@@ -12,6 +12,6 @@
 
   <body>
   <h1>account settings for: <?php echo $email ?></h1>
-  <a href="pass_reset_index.php">reset password</a>
+  <a href="pass_reset_mailer.php">send password reset email</a>
   </body>
   </html>
