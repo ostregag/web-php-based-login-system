@@ -23,8 +23,22 @@ if (Url.has ('ok')) {
 }
 if (Url.has ('blad')){
     document.write("<a>Error</a>")
+}
 
-
+if (Url.has ('password_changed_succesfully')){
+    document.write("<a>password changed succesfully - please login again</a>")
+}
+if (Url.has ('badlink')){
+    document.write("<a>Bad or used link</a>")
+}
+if (Url.has ('notverified')){
+    document.write("<a>not verified - check mail</a>")
+}
+if (Url.has ('verified_succesfully')){
+    document.write("<a>verified</a>")
+}
+if (Url.has ('password_reset_disabled')){
+    document.write("<a>password reset disabled</a>")
 }
 
 

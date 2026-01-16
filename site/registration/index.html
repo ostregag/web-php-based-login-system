@@ -13,5 +13,20 @@
         <button type="submit">Register</button>
          <a href="../login/">Back to login</a>
     </form>
+    <script>
+            const Url = new URLSearchParams(window.location.search);
+            if (Url.has ('exists')) { 
+                document.write("users already exists");
+            }
+            if (Url.has ('rate_limited')) { 
+            document.write("please wait before creating new accounts");
+            }
+            if (Url.has ('bad_email')) { 
+            document.write("bad email address");
+            }
+            if (Url.has ('password_too_short')) { 
+            document.write("password too short - minimum 8 characters");
+            }
+            </script>
 </body>
 </html>

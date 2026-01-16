@@ -10,6 +10,7 @@
  # HOW TO USE:
 
 make sure that the entire backend folder is not accessible through your website!
+ - rename backend/example_config.php and example_dane.php to config.php and dane.php
  - fill backend/dane.php with your database credentials;
  - set a php enviroment variable called "backend" pointing to the backend directory, and enjoy!
   - include this at the top of every page that you want protected:

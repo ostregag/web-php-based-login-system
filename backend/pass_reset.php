@@ -10,7 +10,11 @@ if (!ctype_alnum($token)) {
 } 
 $token_hash = hash('sha256', $token);
 require $_SERVER['backend'] . '/dane.php';
-
+require $_SERVER['backend'] . '/config.php';
+if ($ENABLE_PASSWORD_RESET == 0) {
+    header('Location: login/index.html?password_reset_disabled');
+    exit();
+  }
 
 $sql_ver = "SELECT mail from $table where pass_reset_token = ?";
 $stmt_ver = $conn->prepare($sql_ver);

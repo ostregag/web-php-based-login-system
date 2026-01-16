@@ -13,6 +13,10 @@ if (!isset($_COOKIE["reset_token"])) {
     header ("Location: login/index.html?badlink");
     die;
 }
+if  (strlen($_POST["password"]) < 8) {
+    header("Location: reset.php?password_too_short");
+    exit();
+}
 $pass_reset_cookie = hash('sha256',$_COOKIE["reset_token"]);
     require $_SERVER['backend'] . '/dane.php';
     $sql_mail_check = "SELECT mail FROM $table WHERE pass_reset_token = ?"  ;

@@ -14,10 +14,17 @@
   <body>
   <h1>account settings for: <?php echo $email ?></h1>
   <?php 
-  If ($ENABLE_EMAIL_VERIFICATION == 1) {
+  if ($ENABLE_PASSWORD_RESET == 1) {
     echo '<a href="pass_reset_mailer.php">send password reset email</a>';
   }
+  
   ?>
+  <script>
+            const Url = new URLSearchParams(window.location.search);
+            if (Url.has ('success')) { 
+                document.write("sent succesfully - check mail");
+            }
+  </script>
 
   </body>
   </html>

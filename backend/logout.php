@@ -7,10 +7,11 @@ if (!isset($_COOKIE["logtoken"])) {
 
 }
 $token = $_COOKIE['logtoken'];
+$token_hash = hash('sha256', $token);
 
 $sql = "SELECT id FROM $table WHERE token = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $token);
+$stmt->bind_param("s", $token_hash);
 $stmt->execute();
 $stmt->bind_result($idusera);
 $stmt->fetch();
