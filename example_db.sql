@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 14, 2026 at 05:58 PM
+-- Generation Time: Jan 16, 2026 at 02:05 PM
 -- Server version: 12.1.2-MariaDB
--- PHP Version: 8.5.1
+-- PHP Version: 8.5.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,15 +36,9 @@ CREATE TABLE `users` (
   `register_ip` varchar(65) NOT NULL,
   `login_ip` varchar(65) DEFAULT NULL,
   `verified` varchar(3) NOT NULL DEFAULT 'no',
-  `verify_token` varchar(255) DEFAULT NULL
+  `verify_token` varchar(255) DEFAULT NULL,
+  `pass_reset_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `mail`, `password`, `token`, `created_at`, `register_ip`, `login_ip`, `verified`, `verify_token`) VALUES
-(1, 'example@user.com', '$2y$12$UlHbAFMy5FKPaw6cBRoqrukgztepT2KDMIy2kV5u8ZmnXrLWkFtuK', NULL, '2026-01-14 17:58:43', '::1', NULL, 'no', NULL);
 
 --
 -- Indexes for dumped tables
@@ -54,7 +48,8 @@ INSERT INTO `users` (`id`, `mail`, `password`, `token`, `created_at`, `register_
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `mail` (`mail`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -64,7 +59,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

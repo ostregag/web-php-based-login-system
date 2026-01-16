@@ -16,5 +16,11 @@ if (!isset ($_COOKIE["reset_token"])) {
         <input id="password" type="password" name="password" placeholder="Your new password" required>
         <button type="submit">Register</button>
         </form>
+        <script>
+            const Url = new URLSearchParams(window.location.search);
+            if (Url.has ('password_too_short')) { 
+                document.write("password too short - minimum 8 characters");
+            }
+            </script>
 </body>
 </html>
