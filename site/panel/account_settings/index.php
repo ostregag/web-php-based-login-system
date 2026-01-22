@@ -16,6 +16,8 @@
   <?php 
   if ($ENABLE_PASSWORD_RESET == 1) {
     echo '<a href="pass_reset_mailer.php">send password reset email</a>';
+  }else if ($ENABLE_PASSWORD_RESET == 0) {
+    echo "<a>password reset disabled in config";
   }
   
   ?>
