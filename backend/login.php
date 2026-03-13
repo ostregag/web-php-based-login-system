@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require $_SERVER['backend'] . '/dane.php';
 require $_SERVER['backend'] . '/config.php';
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -46,7 +46,9 @@ if ($szyfrowanehaslo && password_verify($haslo, $szyfrowanehaslo)) {
     $stmt_insert_ip->execute();
     $stmt_insert_ip->close();
     
-    setcookie ("logtoken", $ciastko, time() + 60 * 60 * 24 * 7, "/", "", true, true);
+    #setcookie ("logtoken", $ciastko, time() + 60 * 60 * 24 * 7, "/", "", true, true);
+    #header("Location: ../panel");
+    $_SESSION["logtoken"] = $ciastko;
     header("Location: ../panel");
     $conn->close();
     exit();

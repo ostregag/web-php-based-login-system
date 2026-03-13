@@ -1,11 +1,11 @@
 <?php
+session_start();
 
-
-if (!isset ($_COOKIE["logtoken"])) {
+if (!isset ($_SESSION["logtoken"])) {
     header ("Location: ../login");
    exit();
 }
-$cookie_hash = hash('sha256', $_COOKIE['logtoken']);
+$cookie_hash = hash('sha256', $_SESSION['logtoken']);
 require $_SERVER['backend'] . '/dane.php';
 $sql = "SELECT mail FROM $table WHERE token = ?";
 $stmt = $conn->prepare($sql);
