@@ -1,5 +1,6 @@
 <?php
-if (!isset ($_COOKIE["reset_token"])) {
+session_start();
+if (!isset ($_SESSION["reset_token"])) {
     header ("Location: login/index.html?badlink");
    exit();
 }

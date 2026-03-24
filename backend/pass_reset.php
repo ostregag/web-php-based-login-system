@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (!isset($_GET['token'])) {
     
     exit();
@@ -32,7 +33,7 @@ if (!$db_mail) {
 }
 if ($db_mail) { 
     $_SESSION['mail_reset'] = $db_mail;
-    setcookie ("reset_token", $token, time() + 60 * 60 * 1 * 1, "/", "", true, true);
+    $_SESSION["reset_token"] = $token;
     header ("Location: reset.php");
     $stmt_ver->close();
     exit();
