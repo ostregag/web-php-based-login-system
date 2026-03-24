@@ -1,12 +1,13 @@
 <?php
-
+session_start();
 require $_SERVER['backend'] . '/dane.php';
 
-if (!isset($_COOKIE["logtoken"])) {
-    exit();
+#if (!isset($_COOKIE["logtoken"])) {
+if (!isset($_SESSION["logtoken"])) {
+exit();
 
 }
-$token = $_COOKIE['logtoken'];
+$token = $_SESSION['logtoken'];
 $token_hash = hash('sha256', $token);
 
 $sql = "SELECT id FROM $table WHERE token = ?";
@@ -24,7 +25,9 @@ $stmt2->execute();
     
 $stmt2->close();
     
-setcookie("logtoken", "", time() - 3600, "/", "", true, true);
+#setcookie("logtoken", "", time() - 3600, "/", "", true, true);
+session_unset();
+session_destroy();
 header("Location: ../login");
 $conn->close();
 exit();

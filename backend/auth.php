@@ -1,9 +1,11 @@
 <?php
-
+session_start();
 require $_SERVER['backend'] . '/dane.php';
-if (isset($_COOKIE['logtoken'])) {
-    $ciastko = $_COOKIE['logtoken'];
+#if (isset($_COOKIE['logtoken'])) {
+if (isset($_SESSION["logtoken"])) {
+    $ciastko = $_SESSION['logtoken'];
     $ciastko_hash = hash('sha256', $ciastko);
+
 }
 
 $sql = "SELECT mail FROM $table WHERE token = ?";
